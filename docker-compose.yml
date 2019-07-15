@@ -1,0 +1,33 @@
+#sets up two services named "api" and "postgres"
+#uses a volume named "my_dbdata" for storing the database data. Even if the container and image are deleted, the volume will remain unless explicitly deleted using docker volume rm
+
+
+version: "3"
+services:
+  api:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/db
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app.js:/app/app.js
+      - ./queries.js:/app/queries.js
+      - ./README.md:/app/README.md
+      
+  postgres:
+    image: postgres:11
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+
+volumes:
+  my_dbdata:
