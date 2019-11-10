@@ -3,7 +3,7 @@
 Create, read and update in a Node.js app with an Express server and Postgres database.
 The app is running in Docker container.
 
-## Getting Started
+## Getting Started! 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
